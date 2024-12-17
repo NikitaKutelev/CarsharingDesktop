@@ -5,7 +5,6 @@ Module for initializing the project root path and configuring the environment.
 import os
 import sys
 
-from loguru import logger
 
 
 def initialize_environment():
@@ -25,10 +24,8 @@ def initialize_environment():
     # Add to sys.path if not already present
     if project_root not in sys.path:
         sys.path.append(project_root)
-        logger.debug(f"Added {project_root} to PYTHONPATH.")
 
     os.environ["PYTHONPATH"] = project_root
-    logger.debug(f"Environment initialized successfully at {project_root}.")
 
 
 initialize_environment()

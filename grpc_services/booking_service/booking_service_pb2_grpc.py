@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import pythonKurs.grpc_services.booking_service.booking_service_pb2  as booking__service__pb2
+import grpc_services.booking_service.booking_service_pb2  as booking__service__pb2
 
 
 class BookingServiceStub(object):

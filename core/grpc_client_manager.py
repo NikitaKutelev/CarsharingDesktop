@@ -2,10 +2,10 @@
 import sys
 sys.path.append('d:/pythonKurs')  # Добавляем путь к корню проекта
 
-from pythonKurs.grpc_services.user_service.client import UserClient
-from pythonKurs.grpc_services.car_service.client import CarClient
-from pythonKurs.grpc_services.booking_service.client import BookingClient
-from pythonKurs.grpc_services.payment_service.client import PaymentClient
+from grpc_services.user_service.client import UserClient
+from grpc_services.car_service.client import CarClient
+from grpc_services.booking_service.client import BookingClient
+from grpc_services.payment_service.client import PaymentClient
 
 class GRPCClientManager:
     def __init__(self):

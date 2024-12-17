@@ -1,6 +1,6 @@
 import grpc
-from pythonKurs.grpc_services.user_service.user_service_pb2 import LoginRequest, RegisterRequest, GeneralResponse, LoginResponse, GetUserDetailsRequest, GetUserDetailsResponse, UpdateUserDetailsRequest
-from pythonKurs.grpc_services.user_service.user_service_pb2_grpc import UserServiceStub
+from grpc_services.user_service.user_service_pb2 import LoginRequest, RegisterRequest, GeneralResponse, LoginResponse, GetUserDetailsRequest, GetUserDetailsResponse, UpdateUserDetailsRequest
+from grpc_services.user_service.user_service_pb2_grpc import UserServiceStub
 
 class UserClient:
     def __init__(self, address="localhost:50051"):

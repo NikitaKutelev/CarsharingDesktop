@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import pythonKurs.grpc_services.payment_service.payment_service_pb2 as payment__service__pb2
+import grpc_services.payment_service.payment_service_pb2 as payment__service__pb2
 
 
 class PaymentServiceStub(object):
