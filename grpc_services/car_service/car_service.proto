@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package car_service;
+
+// Определение сервиса CarService
+service CarService {
+    // Добавить автомобиль
+    rpc AddCar(AddCarRequest) returns (AddCarResponse);
+
+    // Получить список всех автомобилей
+    rpc ListCars(ListCarsRequest) returns (ListCarsResponse);
+
+    // Обновить статус автомобиля
+    rpc UpdateCarStatus(UpdateCarStatusRequest) returns (UpdateCarStatusResponse);
+
+    // Получить детали автомобиля
+    rpc GetCarDetails(GetCarDetailsRequest) returns (GetCarDetailsResponse);
+
+    // Удалить автомобиль
+    rpc DeleteCar(DeleteCarRequest) returns (DeleteCarResponse);
+
+    // Поиск автомобилей по локации и категории прав
+    rpc FindCarsByLocationAndCategory(FindCarsRequest) returns (FindCarsResponse);
+}
+
+// Запросы и ответы для AddCar
+message AddCarRequest {
+    string gos_num = 1;        // Гос номер
+    string brand = 2;          // Марка автомобиля
+    string model = 3;          // Модель автомобиля
+    float price_per_hour = 4;  // Цена за час аренды
+    string location = 5;       // Локация автомобиля
+    string status = 6;         // Статус автомобиля (например, "available")
+    string driver_license_category = 7; // Категория водительских прав
+}
+
+message AddCarResponse {
+    bool success = 1;          // Результат добавления
+    string message = 2;        // Сообщение
+    int32 car_id = 3;          // ID добавленного автомобиля
+}
+
+// Запросы и ответы для ListCars
+message ListCarsRequest {
+    // Не требуются параметры
+}
+
+message ListCarsResponse {
+    repeated Car cars = 1;     // Список автомобилей
+}
+
+// Запросы и ответы для UpdateCarStatus
+message UpdateCarStatusRequest {
+    int32 car_id = 1;          // ID автомобиля
+    string status = 2;         // Новый статус (например, "available", "rented")
+}
+
+message UpdateCarStatusResponse {
+    bool success = 1;          // Результат обновления
+    string message = 2;        // Сообщение
+}
+
+// Запросы и ответы для GetCarDetails
+message GetCarDetailsRequest {
+    int32 car_id = 1;          // ID автомобиля
+}
+
+message GetCarDetailsResponse {
+    int32 car_id = 1;                  // ID автомобиля
+    string brand = 2;                  // Марка автомобиля
+    string gos_num = 3;
+    string model = 4;                  // Модель автомобиля
+    float price_per_hour = 5;          // Цена за час аренды
+    string location = 6;               // Локация автомобиля
+    string status = 7;                 // Статус автомобиля (например, "available")
+    string driver_license_category = 8; // Категория водительских прав
+}
+
+// Запросы и ответы для DeleteCar
+message DeleteCarRequest {
+    int32 car_id = 1;          // ID автомобиля
+}
+
+message DeleteCarResponse {
+    bool success = 1;          // Результат удаления
+    string message = 2;        // Сообщение
+}
+
+// Новый запрос для поиска автомобилей по локации и категории прав
+message FindCarsRequest {
+    repeated string driver_license_categories = 1; // Категории водительских прав (массив строк)
+    string location = 2;                           // Локация (строка)
+}
+
+message FindCarsResponse {
+    repeated Car_rent cars = 1;       // Список найденных автомобилей
+}
+
+// Определение структуры автомобиля
+message Car {
+    int32 car_id = 1;          // ID автомобиля
+    string gos_num = 2;        // Гос номер
+    string brand = 3;          // Марка
+    string model = 4;          // Модель
+    float price_per_hour = 5;  // Цена за час аренды
+    string location = 6;       // Локация
+    string status = 7;         // Статус (например, "available")
+    string driver_license_category = 8; // Категория водительских прав
+}
+
+// Определение структуры арендованного авто
+message Car_rent {
+    int32 car_id = 1;          // ID автомобиля
+    string gos_num = 2;        // Гос номер
+    string brand = 3;          // Марка
+    string model = 4;          // Модель
+    float price_per_hour = 5;  // Цена за час аренды
+}

@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package booking_service;
+
+// Запрос на бронирование автомобиля
+message CreateBookingRequest {
+  string user_id = 1;
+  string car_id = 2;
+  string start_time = 3; // Время начала бронирования (ISO 8601)
+  string end_time = 4;   // Время окончания бронирования (ISO 8601)
+}
+
+// Ответ на создание бронирования
+message CreateBookingResponse {
+  bool success = 1;
+  string message = 2;
+  string booking_id = 3; // Уникальный идентификатор бронирования
+}
+
+// Запрос на проверку доступности автомобиля
+message CheckAvailabilityRequest {
+  string car_id = 1;
+  string start_time = 2;
+  string end_time = 3;
+}
+
+// Ответ на проверку доступности
+message CheckAvailabilityResponse {
+  bool available = 1;
+  string message = 2;
+}
+
+// Запрос на отмену бронирования
+message CancelBookingRequest {
+  string booking_id = 1;
+  float full_payment = 2;
+  string transaction_id = 3;
+}
+
+// Запрос на отмену бронирования
+message PaymentRequest {
+  string booking_id = 1;
+}
+
+// Запрос на отмену бронирования
+message PaymentResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Запрос на отмену бронирования
+message HistoryRequest {
+  string user_id = 1;
+}
+
+// Запрос на отмену бронирования
+message HistoryResponse {
+    repeated Books books = 1;
+}
+
+// Ответ на отмену бронирования
+message GeneralResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Описание структуры автомобиля
+message Car {
+  int32 car_id = 1;         // ID автомобиля
+  string gos_num = 2;       // Гос номер
+  string brand = 3;         // Марка автомобиля
+  string model = 4;         // Модель автомобиля
+  float price_per_hour = 5; // Цена за час аренды
+}
+
+// Описание структуры автомобиля
+message Books {
+  string car = 1;         // ID автомобиля
+  string date = 2;         // Модель автомобиля
+  float full_payment = 3;
+}
+
+// Запрос для основного сервиса
+message ThirdServiceRequest {
+  string user_id = 1; // Идентификатор пользователя
+}
+
+// Ответ для основного сервиса
+message ThirdServiceResponse {
+  repeated Car cars = 1; // Список автомобилей, доступных для пользователя
+}
+
+// Интерфейс BookingService
+service BookingService {
+  rpc CreateBooking (CreateBookingRequest) returns (CreateBookingResponse);
+  rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+  rpc CancelBooking (CancelBookingRequest) returns (GeneralResponse);
+  rpc ProcessRequest (ThirdServiceRequest) returns (ThirdServiceResponse);
+  rpc PaymentStarting (PaymentRequest) returns (PaymentResponse);
+  rpc History (HistoryRequest) returns (HistoryResponse);
+
+}

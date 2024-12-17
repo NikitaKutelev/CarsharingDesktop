@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package user_service;
+
+// Сообщение для регистрации пользователя
+message RegisterRequest {
+  string email = 1;
+  string phone = 2;
+  string name = 3;
+  string password = 4;
+}
+
+// Ответ на запросы
+message GeneralResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Запрос для авторизации
+message LoginRequest {
+  string credential = 1; // Может быть email или phone
+  string password = 2;
+}
+
+// Ответ на авторизацию
+message LoginResponse {
+  bool success = 1;
+  string message = 2;
+  string user_id = 3;
+}
+
+// Сообщение для обновления дополнительных данных
+message UpdateUserDetailsRequest {
+  string user_id = 1;
+  string passport = 2;       // Номер паспорта
+  string license = 3;        // Номер водительской лицензии
+  repeated string driver_license_categories = 4; // Категории прав (например, A, B, C, ...)
+  string password = 5;       // Пароль для верификации
+  string location = 6;
+}
+
+// Запрос на апрув пользователя
+message ApproveUserRequest {
+  string user_id = 1;
+}
+
+// Запрос для удаления пользователя
+message DeleteUserRequest {
+  string user_id = 1;
+  string password = 2;
+}
+
+// Запрос для получения всех данных о пользователе
+message GetUserDetailsRequest {
+  string user_id = 1; // ID пользователя, чьи данные нужно получить
+}
+
+// Ответ для получения всех данных о пользователе
+message GetUserDetailsResponse {
+  string user_id = 1;
+  string email = 2;
+  string phone = 3;
+  string name = 4;
+  string passport = 5;
+  string license = 6;
+  repeated string driver_license_categories = 7;
+  string approved = 8;
+  string location = 9;
+}
+
+// Запрос для получения всех данных о пользователе
+message IsUserRdyRequest {
+  string user_id = 1; // ID пользователя, чьи данные нужно получить
+}
+
+// Ответ для получения всех данных о пользователе
+message IsUserRdyResponse {
+  bool success = 1;
+  repeated string driver_license_categories = 2;
+  string location = 3;
+
+}
+
+// Интерфейс UserService
+service UserService {
+  rpc RegisterUser (RegisterRequest) returns (GeneralResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc UpdateUserDetails (UpdateUserDetailsRequest) returns (GeneralResponse);
+  rpc ApproveUser (ApproveUserRequest) returns (GeneralResponse);
+  rpc DeleteUser (DeleteUserRequest) returns (GeneralResponse);
+  rpc GetUserDetails (GetUserDetailsRequest) returns (GetUserDetailsResponse);
+  rpc IsUserRdy (IsUserRdyRequest) returns (IsUserRdyResponse);
+}
